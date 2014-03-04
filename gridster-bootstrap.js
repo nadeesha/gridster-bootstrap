@@ -30,6 +30,7 @@ var bsgridster = function(gridsterBoxes) {
 		var parentBox = makeBox(parent.size_x * ratio, parent.size_y);
 
 		parentBoxContainer.appendChild(parentBox);
+		this.appendChild(parentBoxContainer);
 
 		parent.children = _.chain(gridsterBoxes)
 			.filter(function(child) {
@@ -42,15 +43,13 @@ var bsgridster = function(gridsterBoxes) {
 			})
 			.value();
 
-		_.each(parent.children, function(child) {
-			var childBox = makeBox(child.size_x * ratio, child.size_y);
-			// TODO: children might not be immediate to each other. col-md-push?
+		// if (parent.children.length > 0) {
+			_.each(parent.children, makeContainer, parentBoxContainer);
+		// } else {
+			// this.appendChild(parentBoxContainer);
+		// }
 
 
-			parentBoxContainer.appendChild(childBox);
-		});
-
-		this.appendChild(parentBoxContainer);
 	}
 
 	function html() {
