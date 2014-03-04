@@ -7,3 +7,8 @@
 	background-color: lightgray;
 	border: 1px white solid;
 }
+
+.row {
+	background-color: transparent;
+	border: 0;
+}

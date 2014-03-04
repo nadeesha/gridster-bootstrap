@@ -44,29 +44,29 @@
     <textarea id="log" style="height:100px"></textarea>
 
     <div class="gridster ready">
-        <ul style="height: 455px; width: 550px; position: relative;">
+        <ul style="height: 260px; width: 1320px; position: relative;">
             <li data-row="1" data-col="1" data-sizex="2" data-sizey="2" class="gs-w">0</li>
             <li data-row="1" data-col="3" data-sizex="1" data-sizey="2" class="gs-w">1</li>
             <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="gs-w">2</li>
-            <li data-row="3" data-col="2" data-sizex="3" data-sizey="1" class="gs-w">3</li>
+            <li data-row="1" data-col="7" data-sizex="3" data-sizey="1" class="gs-w">3</li>
 
-            <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" class="gs-w">4</li>
-            <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="gs-w">5</li>
-            <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="gs-w">6</li>
-            <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="gs-w">7</li>
-            <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="gs-w">8</li>
+            <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="gs-w">4</li>
+            <li data-row="1" data-col="6" data-sizex="1" data-sizey="1" class="gs-w">5</li>
+            <li data-row="2" data-col="9" data-sizex="1" data-sizey="1" class="gs-w">6</li>
+            <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="gs-w">7</li>
+            <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="gs-w">8</li>
 
             <li data-row="1" data-col="5" data-sizex="1" data-sizey="3" class="gs-w">9</li>
 
-            <li data-row="5" data-col="1" data-sizex="1" data-sizey="2" class="gs-w">10</li>
-            <li data-row="4" data-col="3" data-sizex="1" data-sizey="2" class="gs-w">11</li>
-            <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="gs-w">12</li>
-            <li data-row="6" data-col="2" data-sizex="3" data-sizey="1" class="gs-w">13</li>
+            <li data-row="3" data-col="4" data-sizex="1" data-sizey="2" class="gs-w">10</li>
+            <li data-row="2" data-col="8" data-sizex="1" data-sizey="2" class="gs-w">11</li>
+            <li data-row="2" data-col="10" data-sizex="1" data-sizey="1" class="gs-w">12</li>
+            <li data-row="1" data-col="10" data-sizex="3" data-sizey="1" class="gs-w">13</li>
 
-            <li data-row="4" data-col="5" data-sizex="1" data-sizey="2" class="gs-w">14</li>
-            <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="gs-w">15</li>
+            <li data-row="2" data-col="6" data-sizex="1" data-sizey="2" class="gs-w">14</li>
+            <li data-row="2" data-col="7" data-sizex="1" data-sizey="1" class="gs-w">15</li>
 
-            <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="gs-w">16</li>
+            <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="gs-w">16</li>
         </ul>
     </div>
 
@@ -90,7 +90,9 @@
 
         gridster = $(".gridster ul").gridster({
             widget_base_dimensions: [100, 55],
-            widget_margins: [5, 5]
+            widget_margins: [5, 5],
+            max_cols: 12,
+            min_cols: 12
         }).data('gridster');
 
 

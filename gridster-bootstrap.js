@@ -1,109 +1,72 @@
-/**/
+/* jshint camelcase: false */
 
 'use strict';
 
 var bsgridster = function(gridsterBoxes) {
 
-	var boxGroups = (function makeBoxGroups(boxes) {
-		boxes = _.sortBy(boxes, function(box) {
-			return box.col;
-		});
+	gridsterBoxes = _.sortBy(gridsterBoxes, function(box) {
+		return box.col;
+	});
 
-		// divide all the boxes according to the rows
-		var boxGroups = _.groupBy(boxes, function(box) {
-			return box.row;
-		});
+	function makeBox(width, height, isRow) {
+		var boxElem = document.createElement('div');
+		var widthClass = 'col-md-' + width.toString();
 
-		// get all the row numbers to an array
-		var boxGroupRows = _.map(boxGroups, function(boxes, row) {
-			return row;
-		});
+		boxElem.className = widthClass + ' graybox';
 
-		// are there any boxes in a row that conflicts with a succeeding row?
-		// if so, mark them
-		_.each(boxGroupRows, function(row) {
-			// for each box of the current row
-			_.each(boxGroups[row], function(box) {
-				box.conflicted = false; // innocent until proven guilty
-
-				if (box.size_y > 1) {
-					var hasConflicts = _.find(boxGroupRows, function(rowNumber) {
-						// find a row such that the row is below the current box, and above
-						// the point where the current box ends.
-						return rowNumber > box.row && rowNumber < box.row + box.size_y;
-					});
-
-					if (hasConflicts) {
-						box.conflicted = true; // guilty!
-					}
-				}
-			});
-		});
-
-		return boxGroups;
-
-	})(gridsterBoxes, boxGroups);
-
-	function makeRow(boxes) {
-		var boxGroupElem = document.createElement('div');
-
-		var firstBox = boxes[0];
-		var lastBox = boxes[boxes.length - 1];
-
-		// var offset = ((firstBox.col-1) * 100/grid.width).toString() + '%';
-		// var width = ((lastBox.col + lastBox.size_x - firstBox.col)*100/grid.width).toString() + '%';
-
-		var offset = 'col-md-push-' + (firstBox.col - 1).toString();
-		var widthInCols = lastBox.col + lastBox.size_x - firstBox.col;
-		var width = 'col-md-' + widthInCols.toString();
-
-		boxGroupElem.className = 'row' + ' ' + offset + ' ' + width;
-
-		if (firstBox.conflicted) {
-			// this is a conflicted loner. Need to set it's height
-			var height = (firstBox.size_y * 50).toString() + 'px';
-			boxGroupElem.style.height = height;
+		if (isRow) {
+			boxElem.className += ' row';
 		}
 
-		return boxGroupElem;
+		boxElem.style.minHeight = (height * 50).toString() + 'px';
+
+		return boxElem;
 	}
 
-	function getHtml() {
-		var containerElem = document.createElement('div');
-		containerElem.className = 'row';
+	function makeContainer(parent) {
+		var ratio = 12 / parent.size_x; // bootstrap to gridster ratio
 
-		_.each(boxGroups, function(boxes) {
-			var boxGroupElem = makeRow(boxes);
+		var parentBoxContainer = makeBox(parent.size_x, 0, true); // this contains the parent box and it's children
+		var parentBox = makeBox(parent.size_x * ratio, parent.size_y);
 
-			var firstBox = boxes[0];
-			var lastBox = boxes[boxes.length - 1];
-			var widthInCols = lastBox.col + lastBox.size_x - firstBox.col;
+		parentBoxContainer.appendChild(parentBox);
 
-			_.each(boxes, function(box) {
-				if (box.conflicted) {
-					var rowWithSingleBox = [box];
-					containerElem.appendChild(makeRow(rowWithSingleBox));
-				} else {
-					var boxElem = document.createElement('div');
-					var width = (box.size_x * 100 / widthInCols).toString() + '%'; // yes, i know, this is not fully responsive. but it works.
-					var height = (box.size_y * 50).toString() + 'px';
+		parent.children = _.chain(gridsterBoxes)
+			.filter(function(child) {
+				return child.col >= parent.col &&
+					(child.size_x + child.col - 1) <= (parent.size_x + parent.col - 1) &&
+					child.row > parent.row;
+			})
+			.sortBy(function(child) {
+				return child.row;
+			})
+			.value();
 
-					boxElem.style.width = width;
-					boxElem.style.height = height;
-					boxElem.style.float = 'left';
+		_.each(parent.children, function(child) {
+			var childBox = makeBox(child.size_x * ratio, child.size_y);
+			// TODO: children might not be immediate to each other. col-md-push?
 
-					boxGroupElem.appendChild(boxElem);
-				}
-			});
 
-			containerElem.appendChild(boxGroupElem);
+			parentBoxContainer.appendChild(childBox);
 		});
 
+		this.appendChild(parentBoxContainer);
+	}
+
+	function html() {
+		var containerElem = document.createElement('div');
+
+		var firstRowBoxes = _.filter(gridsterBoxes, function(box) {
+			return box.row === 1;
+		});
+
+		_.each(firstRowBoxes, makeContainer, containerElem);
+
+		console.log(firstRowBoxes);
 		return containerElem;
 	}
 
-
 	return {
-		getHtml: getHtml
+		getHtml: html
 	};
 };
