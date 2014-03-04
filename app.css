@@ -1,0 +1,9 @@
+.row > div {
+	background-color: lightgray;
+	border: 1px white solid;
+}
+
+.graybox {
+	background-color: lightgray;
+	border: 1px white solid;
+}
