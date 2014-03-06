@@ -1,8 +1,8 @@
 /* jshint camelcase: false */
 
-'use strict';
-
 var bsgridster = function(gridsterBoxes) {
+
+	'use strict';
 
 	gridsterBoxes = _.sortBy(gridsterBoxes, function(box) {
 		return box.col;
@@ -15,7 +15,7 @@ var bsgridster = function(gridsterBoxes) {
 		boxElem.className = widthClass + ' graybox';
 
 		if (isRow) {
-			boxElem.className += ' row';
+			boxElem.className += '';
 		}
 
 		boxElem.style.minHeight = (height * 50).toString() + 'px';
@@ -23,37 +23,46 @@ var bsgridster = function(gridsterBoxes) {
 		return boxElem;
 	}
 
-	function makeContainer(parent) {
-		var ratio = 12 / parent.size_x; // bootstrap to gridster ratio
 
-		var parentBoxContainer = makeBox(parent.size_x, 0, true); // this contains the parent box and it's children
-		var parentBox = makeBox(parent.size_x * ratio, parent.size_y);
-
-		parentBoxContainer.appendChild(parentBox);
-		this.appendChild(parentBoxContainer);
-
-		parent.children = _.chain(gridsterBoxes)
+	function getChildren(parent) {
+		return _.chain(gridsterBoxes)
 			.filter(function(child) {
 				return child.col >= parent.col &&
 					(child.size_x + child.col - 1) <= (parent.size_x + parent.col - 1) &&
-					child.row > parent.row;
+					child.row === (parent.row + parent.size_y); // is a child and not a grandchild
 			})
 			.sortBy(function(child) {
 				return child.row;
 			})
 			.value();
-
-		// if (parent.children.length > 0) {
-			_.each(parent.children, makeContainer, parentBoxContainer);
-		// } else {
-			// this.appendChild(parentBoxContainer);
-		// }
+	}
 
 
+	function makeContainer(box, widthOverride) {
+		var ratio = 12 / box.size_x; // bootstrap to gridster ratio
+
+		var parentBoxContainer = makeBox(box.row===1 ? box.size_x : widthOverride, 0, true); // this contains the box box and it's children
+		var parentBox = makeBox(box.size_x * ratio, box.size_y);
+
+		parentBoxContainer.appendChild(parentBox);
+		this.appendChild(parentBoxContainer);
+
+		_.each(box.children, function(child) {
+			if(child.children.length > 0) {
+				makeContainer.call(parentBoxContainer, child, (child.size_x/this.size_x)*12);
+			} else {
+				var childBox = makeBox(child.size_x * ratio, child.size_y);
+				parentBoxContainer.appendChild(childBox);
+			}
+		}, box);
 	}
 
 	function html() {
 		var containerElem = document.createElement('div');
+
+		_.each(gridsterBoxes, function(box) {
+			box.children = getChildren(box);
+		});
 
 		var firstRowBoxes = _.filter(gridsterBoxes, function(box) {
 			return box.row === 1;

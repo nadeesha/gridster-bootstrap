@@ -1,11 +1,17 @@
-.row > div {
+/*.row > div {
 	background-color: lightgray;
+	border: 1px white solid;
+}*/
+
+.graybox {
+	background-color: transparent;
 	border: 1px white solid;
 }
 
-.graybox {
+.graybox > .graybox {
 	background-color: lightgray;
 	border: 1px white solid;
+	padding: 0;
 }
 
 .row {
