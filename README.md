@@ -11,27 +11,27 @@ An attempt to generate boostrap-based responsive layouts using [gridster.js](htt
 
 #Usage
 1. Initialise your gridster layout, do your magic, and serialise it like this:
-```js
-var serialized = gridster.serialize();
-```
+	```js
+	var serialized = gridster.serialize();
+	```
 2. Pass your serialized gridster layout to a new `bsgridster` object:
-```js
-var bootstrapLayout = new bsgridster(serialized, unitHeight, boxClass);
-```
-As you can see, `bsgridster` constructor takes 3 arguments.
-	* `serialized` - your gridster serialzation from step 1.
-	* `unitHeight` (optional - defaults to `50`) - a `Number` value depicting how tall a single box should be, in pixels.
-	* `boxClass` (optional) - a string for the name of a custom css that would be appended to all boxes. ex:
-```css
-.graybox {
-		background-color: lightgray;
-		border: 1px white solid;
-}
-```
+	```js
+	var bootstrapLayout = new bsgridster(serialized, unitHeight, boxClass);
+	```
+	As you can see, `bsgridster` constructor takes 3 arguments.
+		* `serialized` - your gridster serialzation from step 1.
+		* `unitHeight` (optional - defaults to `50`) - a `Number` value depicting how tall a single box should be, in pixels.
+		* `boxClass` (optional) - a string for the name of a custom css that would be appended to all boxes. ex:
+	```css
+	.graybox {
+			background-color: lightgray;
+			border: 1px white solid;
+	}
+	```
 3. Render the HTML for the layout
-```js
-bootstrapLayout.getHtml();
-```
+	```js
+	bootstrapLayout.getHtml();
+	```
 4. Profit!
 
 #Example
