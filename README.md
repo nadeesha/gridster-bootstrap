@@ -4,9 +4,9 @@ An attempt to generate boostrap-based responsive layouts using [gridster.js](htt
 
 #Set up
 1. For the moment, we need underscore.js as a dependency. So you'll need to add that to your project.
-```sh
-bower install underscore
-```
+	```sh
+	bower install underscore
+	```
 2. Then simply include the `gridster-bootstrap.js` to your **bootrap enabled** project, and you're good to go.
 
 #Usage
