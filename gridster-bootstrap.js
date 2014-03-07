@@ -3,8 +3,12 @@
 	unitHeight: height of a single gridster box in pixes
 */
 
-var bsgridster = function(gridsterBoxes, unitHeight) {
+var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 	'use strict';
+
+	if(typeof _ === 'undefined') {
+		throw 'Shucks! We need underscore.js as a dependency. For now at least...'
+	}
 
 	if (!unitHeight) {
 		unitHeight = 50;
@@ -19,7 +23,7 @@ var bsgridster = function(gridsterBoxes, unitHeight) {
 
 	function makeBox(width, height, offset) {
 		var boxElem = document.createElement('div');
-		boxElem.className = 'graybox';
+		boxElem.className = customBoxClass;
 
 		boxElem.className += ' col-md-' + width.toString();
 
@@ -34,7 +38,8 @@ var bsgridster = function(gridsterBoxes, unitHeight) {
 
 	function makeRow() {
 		var rowElem = document.createElement('div');
-		rowElem.className = 'row col-md-12 fifty';
+		rowElem.className = 'row col-md-12';
+		rowElem.style.height = unitHeight.toString() + "px";
 		return rowElem;
 	}
 
