@@ -28,37 +28,88 @@
         </ul>
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h1>
+<a name="gridster-bootstrap" class="anchor" href="#gridster-bootstrap"><span class="octicon octicon-link"></span></a>gridster-bootstrap</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>An attempt to generate boostrap-based responsive layouts using <a href="https://github.com/ducksboard/gridster.js">gridster.js</a>. Check out the <strong><a href="https://rawgithub.com/ncthis/gridster-bootstrap/master/demo/index.html">demo</a></strong>.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h1>
+<a name="set-up" class="anchor" href="#set-up"><span class="octicon octicon-link"></span></a>Set up</h1>
+
+<ol>
+<li>
+<p>For the moment, we need underscore.js as a dependency. So you'll need to add that to your project.</p>
+
+<div class="highlight highlight-sh"><pre>    bower install underscore
+</pre></div>
+</li>
+<li><p>Then simply include the <code>gridster-bootstrap.js</code> to your <strong>bootrap enabled</strong> project, and you're good to go.</p></li>
+</ol><h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<ol>
+<li>
+<p>Initialise your gridster layout, do your magic, and serialise it like this:</p>
+
+<pre><code>var serialized = gridster.serialize();
+</code></pre>
+</li>
+<li>
+<p>Pass your serialized gridster layout to a new <code>bsgridster</code> object:</p>
+
+<pre><code>var bootstrapLayout = new bsgridster(serialized, unitHeight, boxClass);
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>As you can see, <code>bsgridster</code> constructor takes 3 arguments.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<ul>
+<li>
+<code>serialized</code> - your gridster serialzation from step 1.</li>
+<li>
+<code>unitHeight</code> (optional - defaults to <code>50</code>) - a <code>Number</code> value depicting how tall a single box should be, in pixels.</li>
+<li>
+<code>boxClass</code> (optional) - a string for the name of a custom css that would be appended to all boxes.</li>
+</ul>
+</li>
+<li>
+<p>Render the HTML for the layout</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<div class="highlight highlight-js"><pre><span class="nx">bootstrapLayout</span><span class="p">.</span><span class="nx">getHtml</span><span class="p">();</span>
+</pre></div>
+</li>
+<li><p>Profit!</p></li>
+</ol><h1>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h1>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">bsgridster</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">'graybox'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">getHtml</span><span class="p">();</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'myContainer'</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+</pre></div>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h1>
+<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h1>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<p>Feel free to <code>git clone</code> and play around in the demo directory.</p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<h1>
+<a name="contributions" class="anchor" href="#contributions"><span class="octicon octicon-link"></span></a>Contributions</h1>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<p>Please!</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<h1>
+<a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h1>
+
+<ul>
+<li>Remove underscore as a dependency.</li>
+<li>Support all the screen sizes. (Currently only <code>col-md</code> is supported)</li>
+<li>Better row utilization with nested gridster layouts
+
+<ul>
+<li>Currently, the responsive layout collapsed will collapse row by row. In some cases, this might not be favorable.</li>
+<li>There might be limitations on gridster in achieving this.</li>
+</ul>
+</li>
+</ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/ncthis">ncthis</a></p>
