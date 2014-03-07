@@ -1,76 +1,81 @@
-/* jshint camelcase: false */
+/*
+	gridsterBoxes: an array of serialized gridster boxes
+	unitHeight: height of a single gridster box in pixes
+*/
 
-var bsgridster = function(gridsterBoxes) {
-
+var bsgridster = function(gridsterBoxes, unitHeight) {
 	'use strict';
+
+	if (!unitHeight) {
+		unitHeight = 50;
+	}
+
+	document.querySelector('style').textContent +=
+    '@media (min-width: 992px) { .row {height:'+unitHeight.toString()+'px;}}';
 
 	gridsterBoxes = _.sortBy(gridsterBoxes, function(box) {
 		return box.col;
 	});
 
-	function makeBox(width, height, isRow) {
+	function makeBox(width, height, offset) {
 		var boxElem = document.createElement('div');
-		var widthClass = 'col-md-' + width.toString();
+		boxElem.className = 'graybox';
 
-		boxElem.className = widthClass + ' graybox';
+		boxElem.className += ' col-md-' + width.toString();
 
-		if (isRow) {
-			boxElem.className += '';
+		if(offset>0) {
+			boxElem.className += ' col-md-offset-' + offset.toString();
 		}
 
-		boxElem.style.minHeight = (height * 50).toString() + 'px';
+		boxElem.style.minHeight = (height * unitHeight).toString() + 'px';
 
 		return boxElem;
 	}
 
-
-	function getChildren(parent) {
-		return _.chain(gridsterBoxes)
-			.filter(function(child) {
-				return child.col >= parent.col &&
-					(child.size_x + child.col - 1) <= (parent.size_x + parent.col - 1) &&
-					child.row === (parent.row + parent.size_y); // is a child and not a grandchild
-			})
-			.sortBy(function(child) {
-				return child.row;
-			})
-			.value();
-	}
-
-
-	function makeContainer(box, widthOverride) {
-		var ratio = 12 / box.size_x; // bootstrap to gridster ratio
-
-		var parentBoxContainer = makeBox(box.row===1 ? box.size_x : widthOverride, 0, true); // this contains the box box and it's children
-		var parentBox = makeBox(box.size_x * ratio, box.size_y);
-
-		parentBoxContainer.appendChild(parentBox);
-		this.appendChild(parentBoxContainer);
-
-		_.each(box.children, function(child) {
-			if(child.children.length > 0) {
-				makeContainer.call(parentBoxContainer, child, (child.size_x/this.size_x)*12);
-			} else {
-				var childBox = makeBox(child.size_x * ratio, child.size_y);
-				parentBoxContainer.appendChild(childBox);
-			}
-		}, box);
+	function makeRow() {
+		var rowElem = document.createElement('div');
+		rowElem.className = 'row col-md-12 fifty';
+		return rowElem;
 	}
 
 	function html() {
 		var containerElem = document.createElement('div');
+		var rows = [];
 
-		_.each(gridsterBoxes, function(box) {
-			box.children = getChildren(box);
+		var groupedBoxes = _.groupBy(gridsterBoxes, function(box) {
+			return box.row;
 		});
 
-		var firstRowBoxes = _.filter(gridsterBoxes, function(box) {
-			return box.row === 1;
+		var maxRow = (_.max(gridsterBoxes, function(box) {
+			return box.row;
+		})).row;
+
+		_.times(maxRow, function(n) {
+			rows.push({row: n, elem: makeRow()});
 		});
 
-		_.each(firstRowBoxes, makeContainer, containerElem);
+		_.each(groupedBoxes, function (boxes, row) {
+			var rowElem = rows[row-1].elem;
 
-		console.log(firstRowBoxes);
+			_.each(boxes, function (box, index, boxesInRow) {
+				var immediateLeftBox = boxesInRow[index-1];
+				var offset = 0;
+
+				if(immediateLeftBox) {
+					offset = box.col - (immediateLeftBox.col+immediateLeftBox.size_x);
+				} else {
+					offset = box.col-1;
+				}
+
+				var boxElem = makeBox(box.size_x, box.size_y, offset);
+				rowElem.appendChild(boxElem);
+			});
+		});
+
+		_.each(rows, function(row) {
+			containerElem.appendChild(row.elem);
+		});
+
 		return containerElem;
 	}
 
