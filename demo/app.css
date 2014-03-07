@@ -1,7 +1,6 @@
-/*.row > div {
-	background-color: lightgray;
-	border: 1px white solid;
-}*/
+html {
+	margin: 20px;
+}
 
 .graybox {
 	background-color: lightgray;
@@ -12,9 +11,3 @@
 	background-color: transparent;
 	border: 0;
 }
-
-/*@media (min-width: 992px) {
-	.row {
-		height:50px;
-	}
-}*/

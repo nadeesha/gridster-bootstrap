@@ -32,17 +32,17 @@
 
 <body style="">
 
-    <h1>Serialize positions</h1>
+    <h1>Demo</h1>
 
-    <p>Use
-        <code>serialize</code>method to get widget positions. It returns a Array of objects that can be used as a JSON object.</p>
+    <p>Alter the gridster layout and press Go! below</p>
 
     <div class="controls">
-        <button class="js-seralize">Serialize</button>
+        <button class="js-seralize btn btn-success btn-lg">Go!</button>
     </div>
 
-    <textarea id="log" style="height:100px"></textarea>
+    <hr>
 
+    <h2>Gridster Layout</h2>
     <div class="gridster ready">
         <ul style="height: 260px; width: 1320px; position: relative;">
             <li data-row="1" data-col="1" data-sizex="2" data-sizey="2" class="gs-w">0</li>
@@ -70,10 +70,14 @@
         </ul>
     </div>
 
-    <textarea id="bs-log" style="height:100px"></textarea>
+    <h2>Gridster Serialized Output</h2>
+    <textarea id="log" style="height:100px"></textarea>
 
     <hr>
+    <h2>Boostrap Rendered HTML</h2>
+    <textarea id="bs-log" style="height:100px; width:100%;"></textarea>
 
+    <h2>Boostrap Rendered Layout</h2>
     <div id="grids"></div>
 
 
