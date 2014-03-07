@@ -7,8 +7,8 @@
     <title>Demo » Serialize » gridster.js</title>
     <link rel="stylesheet" type="text/css" href="./index_files/jquery.gridster.css">
     <link rel="stylesheet" type="text/css" href="./index_files/demo.css">
-    <link rel="stylesheet" type="text/css" href="./app.css">
     <link rel="stylesheet" type="text/css" href="./app/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./app.css">
 
 
     <style type="text/css">
@@ -100,7 +100,7 @@
             var s = gridster.serialize();
             $('#log').val(JSON.stringify(s));
 
-            var b = new bsgridster(s);
+            var b = new bsgridster(s, 50, 'graybox');
             var v = b.getHtml();
             $('#grids').html(v);
             $('#bs-log').val(v.innerHTML);
