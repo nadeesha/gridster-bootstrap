@@ -1,6 +1,6 @@
 gridster-bootstrap
 ==================
-An attempt to generate boostrap-based responsive layouts using [gridster.js](https://github.com/ducksboard/gridster.js)
+An attempt to generate boostrap-based responsive layouts using [gridster.js](https://github.com/ducksboard/gridster.js). Check out the [demo](https://rawgithub.com/ncthis/gridster-bootstrap/master/demo/index.html).
 
 #Set up
 1. For the moment, we need underscore.js as a dependency. So you'll need to add that to your project.
