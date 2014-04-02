@@ -39,7 +39,6 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 	function makeRow() {
 		var rowElem = document.createElement('div');
 		rowElem.className = 'row col-md-12';
-		rowElem.style.height = unitHeight.toString() + "px";
 		return rowElem;
 	}
 
