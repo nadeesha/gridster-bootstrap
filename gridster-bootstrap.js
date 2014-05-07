@@ -1,8 +1,3 @@
-/*
-	gridsterBoxes: an array of serialized gridster boxes
-	unitHeight: height of a single gridster box in pixes
-*/
-
 var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 	'use strict';
 
@@ -21,7 +16,7 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 		return box.col;
 	});
 
-	function makeBox(width, height, offset) {
+	function makeBox(width, height, offset, id) {
 		var boxElem = document.createElement('div');
 		boxElem.className = customBoxClass;
 
@@ -32,6 +27,8 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 		}
 
 		boxElem.style.minHeight = (height * unitHeight).toString() + 'px';
+
+		boxElem.id = id;
 
 		return boxElem;
 	}
@@ -71,7 +68,7 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 					offset = box.col-1;
 				}
 
-				var boxElem = makeBox(box.size_x, box.size_y, offset);
+				var boxElem = makeBox(box.size_x, box.size_y, offset, box.id);
 				rowElem.appendChild(boxElem);
 			});
 		});
