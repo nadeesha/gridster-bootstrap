@@ -2,8 +2,38 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 	'use strict';
 
 	if(typeof _ === 'undefined') {
-		throw 'Shucks! We need underscore.js as a dependency. For now at least...'
+		throw 'Shucks! We need underscore.js as a dependency. For now at least...';
 	}
+
+	//Helper
+	var helper = {
+		getMaxRow: function ( items ) {
+			var max = 0;
+			if ( Array.isArray( items ) ) {
+				items.forEach( function ( item ) {
+					if ( item.row >= max ) {
+						max = item.row;
+					}
+				});
+				return max;
+			} else {
+				throw new Error( 'Invalid argument : getMaxRow method accept array as a argument..!' );
+			}
+		},
+
+		times: function ( num, cb ) {
+ 			var canProceed = typeof num === 'number' && typeof cb === 'function';
+
+ 			if ( canProceed ) {
+			    for ( var i = 0; i < num; i++ ) {
+			      cb(i);
+			    }
+		  	} else {
+		   		throw new Error("Invalid arguments into the times method..!");
+		  	}
+		}
+	};
+
 
 	if (!unitHeight) {
 		unitHeight = 50;
@@ -47,11 +77,9 @@ var bsgridster = function(gridsterBoxes, unitHeight, customBoxClass) {
 			return box.row;
 		});
 
-		var maxRow = (_.max(gridsterBoxes, function(box) {
-			return box.row;
-		})).row;
+		var maxRow = helper.getMaxRow( gridsterBoxes );
 
-		_.times(maxRow, function(n) {
+		helper.times( maxRow, function ( n ) {
 			rows.push({row: n, elem: makeRow()});
 		});
 
