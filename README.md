@@ -1,3 +1,10 @@
+# DEPERECATION NOTICE
+
+This library is unsupported as of now. For a better alternative, please use [Giridstack.js](http://troolee.github.io/gridstack.js/)
+
+
+---
+
 gridster-bootstrap
 ==================
 An attempt to generate boostrap-based responsive layouts using [gridster.js](https://github.com/ducksboard/gridster.js). Check out the [demo](https://rawgithub.com/ncthis/gridster-bootstrap/master/demo/index.html).
